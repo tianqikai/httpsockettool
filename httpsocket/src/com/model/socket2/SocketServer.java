@@ -1,8 +1,6 @@
 package com.model.socket2;
 
 import com.model.conf.ConfigurationManager;
-import com.model.socket.TxSocketServer;
-import com.model.test.ServerThread;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -31,7 +29,8 @@ public class SocketServer {
             Socket socket = null;
             //记录客户端数量
             int count = 0;
-            System.out.println("服务器启动");
+            System.out.println("服务器启动"+inServerPort);
+            log.info("服务器启动"+inServerPort);
             //定义一个死循环，不停的接收客户端连接
             while (true) {
                 //侦听并接受到此套接字的连接

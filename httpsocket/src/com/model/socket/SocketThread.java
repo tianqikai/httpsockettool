@@ -1,6 +1,7 @@
 package com.model.socket;
 
 import com.model.conf.ConfigurationManager;
+import com.model.utils.SocketClientUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -37,9 +38,9 @@ public class SocketThread extends Thread{
             socket.shutdownInput();
             log.info("接收第三方的请求信息："+requestMsg);
             dos = new DataOutputStream(socket.getOutputStream());
-            dos.write("服务端返回信息testQQQQ！！".getBytes("utf-8"));
-            dos.flush();
-//            sendMsg(requestMsg,dos);
+//            dos.write("服务端返回信息testQQQQ！！".getBytes("utf-8"));
+//            dos.flush();
+            sendMsg(requestMsg,dos);
         }catch(Exception e){
             log.error("the resquest is error",e);
             log.error(e);
@@ -83,7 +84,7 @@ public class SocketThread extends Thread{
     }
     /**
      * @methodname: sendMsg
-     * @description: 转发消息
+     * @description: 转发消息第三方并接收返回消息
      * @param request
      * @param dos
      * @author: tianqikai
@@ -91,12 +92,12 @@ public class SocketThread extends Thread{
      */
     private void sendMsg(String request,DataOutputStream dos) throws IOException {
         //请求服务器处理请求信息
-        log.info("转发服务端信息："+request);
-        StringBuilder response=new StringBuilder();
-        response.append(request).append("的返回信息！！");
-        String responseStr=response.toString();
-        log.info("发送返回信息："+responseStr);
-        byte[] bytes=responseStr.getBytes("utf-8");
+        log.info("转发内部服务端请求信息："+request);
+        String response=new String();
+        response=SocketClientUtils.connectSocket(inServerIP,inServerPort,request);
+        log.info("发送内部服务器返回信息："+response);
+        byte[] bytes=response.getBytes("utf-8");
         dos.write(bytes);
+        dos.flush();
     }
 }
