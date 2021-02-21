@@ -16,6 +16,7 @@ public class SocketClientUtils {
        log.info("发送报文sendmsg："+sendmsg);
        try {
            socket=new Socket(ip, port);
+           socket.setSoTimeout(6000);
        } catch (IOException e) {
            log.error(String.format("连接服务器[%s;%d]失败",ip,port));
        }
@@ -24,8 +25,10 @@ public class SocketClientUtils {
        try {
            byte[] sendBytes = sendmsg.getBytes();
            out.write(sendBytes);
+           //刷新缓冲
            out.flush();
-           socket.setSoTimeout(6000);
+           //只关闭输出流而不关闭连接
+           socket.shutdownOutput();
            //获取服务端返回信息
            respMsg= getMessage(in);
        } catch (IOException e) {
@@ -44,24 +47,30 @@ public class SocketClientUtils {
      * @param in
      * @return
      */
-   public  static String  getMessage(DataInputStream in){
+   public  static String  getMessage(DataInputStream in) throws IOException {
        int length=0;
        StringBuilder resp= new StringBuilder();
        byte[] respBody = new byte[1024];
        String lineStr=null;
+       BufferedReader bufferedReader=null;
        try{
-           BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(in));
+           bufferedReader=new BufferedReader(new InputStreamReader(in));
            while((lineStr=bufferedReader.readLine())!=null){
                resp.append(lineStr);
            }
        }catch (Exception e){
            log.error("获取返回信息系统异常：",e);
+           throw e;
+       }finally {
+           if(bufferedReader!=null){
+               bufferedReader.close();
+           }
        }
        log.info("resp:"+resp.toString());
        return resp.toString();
    }
     public static void main(String[] args) throws IOException {
-       args= new String[]{"127.0.0.1", Integer.toString(serverPort), "发送内容111testeof\n"};
+       args= new String[]{"127.0.0.1","8899", "发送内容11发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof发送内容111testeof1testeof\n"};
         System.out.println(args[0]);
         System.out.println(args[1]);
         System.out.println(args[2]);

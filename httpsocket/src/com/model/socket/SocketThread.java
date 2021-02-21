@@ -33,6 +33,8 @@ public class SocketThread extends Thread{
             in= new DataInputStream(socket.getInputStream());
             //读取输入流中的请求报文信息
             String requestMsg=getMsg(in);
+            //关闭输入流
+            socket.shutdownInput();
             log.info("接收第三方的请求信息："+requestMsg);
             dos = new DataOutputStream(socket.getOutputStream());
             dos.write("服务端返回信息testQQQQ！！".getBytes("utf-8"));
@@ -75,10 +77,6 @@ public class SocketThread extends Thread{
                     break;
                 }
             }
-            //读1024个字节到info中(这种方式读取，中文会出现乱码问题，一个汉字可能是2个3个4个字节)
-//            while((len=in.read(info,0,info.length))!=-1){
-//              result.append(new String(info), 0, len );
-//            }
         }finally{
             return  result.toString();
         }
