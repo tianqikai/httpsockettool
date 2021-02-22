@@ -3,6 +3,7 @@ package com.model.socket2;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Optional;
 
 public class ServerThread extends Thread {
     Socket socket = null;
@@ -46,7 +47,8 @@ public class ServerThread extends Thread {
                     break;
                 }
             }
-            socket.shutdownInput();//关闭输入流
+            //关闭输入流,不关闭socket套接字
+            socket.shutdownInput();
 
             //响应客户端请求
             outputStream = socket.getOutputStream();
