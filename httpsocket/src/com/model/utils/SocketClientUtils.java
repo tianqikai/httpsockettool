@@ -6,10 +6,24 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
-  
+  /**
+   * @classname : SocketClientUtils
+   * @description: 
+   * @author: tianqikai
+   * @date : 2021/2/23 22:09
+   */
 public class SocketClientUtils {
    private static Logger log= LogManager.getLogger(SocketClientUtils.class);
    private static int serverPort= ConfigurationManager.getConfigValueAsInt("Socket.Server.Port");
+   /**
+    * @Method： connectSocket
+    * @Description： socket客户端
+    * @param
+    * @Exception： IOException
+    * @Date： 2021/2/23 22:09
+    * @Author： Administrator
+    * @Version  1.0
+    */
    public static String connectSocket(String ip,int port ,String sendmsg) throws IOException {
        Socket socket = null;
        String respMsg="";

@@ -16,7 +16,7 @@ import java.util.concurrent.*;
  * @date : 2021/1/25 0025
  */
 public class TxHttpServer {
-    private static String httpServerPort= ConfigurationManager.getConfigValue("httpServerPort");
+    private static String httpServerPort= ConfigurationManager.getConfigValue("http.server.port");
     private static String httpServerContext= ConfigurationManager.getConfigValue("txHttpContext");
     public static Logger log= LogManager.getLogger(TxHttpServer.class);
     /**
@@ -45,10 +45,10 @@ public class TxHttpServer {
                     new ThreadPoolExecutor.AbortPolicy());
             httpserver.setExecutor(executorService);
             httpserver.start();
-            log.info("启动http服务端口：[{}]"+httpServerPort);
-            log.info("启动http服务上下文根节点：[{}]"+httpServerContext);
+            log.info("启动http服务端口："+httpServerPort);
+            log.info("启动http服务上下文根节点："+httpServerContext);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("the http is error:"+e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.model;
 
+import com.model.http.server.TxHttpServer;
 import com.model.socket.TxSocketServer;
 
 /**
@@ -10,6 +11,9 @@ import com.model.socket.TxSocketServer;
  */
 public class StartServer {
     public static void main(String[] args) {
-        TxSocketServer.startReceiveServer();
+
+//        TxSocketServer.startReceiveServer();
+
+        TxHttpServer.startTxHttpServer();
     }
 }
