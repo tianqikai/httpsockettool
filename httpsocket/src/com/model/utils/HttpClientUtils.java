@@ -1,12 +1,15 @@
 package com.model.utils;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -31,9 +34,7 @@ public class HttpClientUtils {
      */
     public static String HttpPostWithJson(String url, String json) throws IOException {
         String returnValue = "这是默认返回值，接口调用失败";
-
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
         try{
             //第一步：创建HttpClient对象
             httpClient = HttpClients.createDefault();
@@ -45,8 +46,9 @@ public class HttpClientUtils {
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setEntity(requestEntity);
             //第四步：发送HttpPost请求，获取返回值;//调接口获取返回值时，必须用此方法
-            returnValue = httpClient.execute(httpPost,responseHandler);
-
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            HttpEntity rtnEntity = response.getEntity();
+            returnValue = EntityUtils.toString(rtnEntity, "utf-8");
         } catch(Exception e) {
             log.error("httpClient error："+e);
             throw e;
@@ -59,12 +61,12 @@ public class HttpClientUtils {
             }
         }
         //第五步：处理返回值
-        log.info("HttpClient返回信息："+new String(returnValue.getBytes(),"utf-8"));
+        log.info("HttpClient返回信息："+returnValue);
         return returnValue;
     }
 
     public static void main(String[] args) throws IOException {
-        HttpPostWithJson("http://127.0.0.1:8800/#/","{ name:\"zhou\",age:30}");
+        HttpPostWithJson("http://127.0.0.1:8800/#/","{ name:\"zhou\",age:30,city:\"泰安\"}");
     }
 
 }

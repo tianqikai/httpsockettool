@@ -47,6 +47,7 @@ public class SocketClientUtils {
            respMsg= getMessage(in);
        } catch (IOException e) {
            log.error("系统异常：",e);
+           throw e;
        }finally {
            in.close();
            out.close();

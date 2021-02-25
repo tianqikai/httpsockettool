@@ -36,7 +36,7 @@ public class TxHandler implements HttpHandler {
         String request=getMsg(requestInputStream);
         log.info("http请求的信息："+request);
         //返回报文
-        String resmsg="恭喜你成功了!";
+        String resmsg="恭喜你成功了!";//这里换成实际要转发的服务
         httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,resmsg.getBytes("UTF-8").length );
         OutputStream outputStream=httpExchange.getResponseBody();
         outputStream.write(resmsg.getBytes("UTF-8"));
