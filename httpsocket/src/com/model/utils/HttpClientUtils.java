@@ -59,7 +59,7 @@ public class HttpClientUtils {
             }
         }
         //第五步：处理返回值
-        log.info("HttpClient返回信息："+returnValue);
+        log.info("HttpClient返回信息："+new String(returnValue.getBytes(),"utf-8"));
         return returnValue;
     }
 
