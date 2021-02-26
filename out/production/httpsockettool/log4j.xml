@@ -4,7 +4,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
     <!-- 日志输出到控制台 -->
-    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+    <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
         <!-- 日志输出格式 -->
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%p][%d{yyyy-MM-dd HH:mm:ss SSS}][%c]-[%m]%n"/>
@@ -21,7 +21,7 @@
 
 
     <!-- 输出日志到文件 -->
-    <appender name="tx_log_all" class="org.apache.log4j.FileAppender">
+    <appender name="fileAppender" class="org.apache.log4j.FileAppender">
         <!-- 输出文件全路径名-->
         <param name="File" value="/logs/tx_log_all.log"/>
         <!--是否在已存在的文件追加写：默认时true，若为false则每次启动都会删除并重新新建文件-->
@@ -40,7 +40,7 @@
 
     <!-- 输出日志到文件，当文件大小达到一定阈值时，自动备份 -->
     <!-- FileAppender子类 -->
-    <appender name="tx_log" class="org.apache.log4j.RollingFileAppender">
+    <appender name="rollingFileAppender" class="org.apache.log4j.RollingFileAppender">
         <!-- 日志文件全路径名 -->
         <param name="File" value="/logs/tx_log.log" />
         <!--是否在已存在的文件追加写：默认时true，若为false则每次启动都会删除并重新新建文件-->
@@ -58,7 +58,7 @@
 
 
     <!-- 日志输出到文件，可以配置多久产生一个新的日志信息文件 -->
-    <appender name="tx_log_day" class="org.apache.log4j.DailyRollingFileAppender">
+    <appender name="dailyRollingFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <!-- 文件文件全路径名 -->
         <param name="File" value="/logs/tx_log_day.log"/>
         <param name="Append" value="true" />
@@ -81,16 +81,20 @@
     -->
     <logger name="com.model.socket" >
         <level value ="INFO"/>
-<!--        <appender-ref ref="dailyRollingAppender"/>-->
-        <appender-ref ref="tx_log_all"/>
-        <appender-ref ref="tx_log"/>
-        <appender-ref ref="tx_log_day"/>
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="rollingFileAppender"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+<!--        <appender-ref ref="tx_log_all"/>-->
+<!--        <appender-ref ref="tx_log"/>-->
+<!--        <appender-ref ref="tx_log_day"/>-->
     </logger>
 
 
     <!-- 根logger的设置，若代码中未找到指定的logger，则会根据继承机制，使用根logger-->
     <root>
-        <appender-ref ref="console"/>
+<!--        <appender-ref ref="console"/>-->
+        <appender-ref ref="consoleAppender"/>
 <!--        <appender-ref ref="All"/>-->
     </root>
 

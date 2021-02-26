@@ -81,7 +81,10 @@
     -->
     <logger name="com.model.socket" >
         <level value ="INFO"/>
-<!--        <appender-ref ref="dailyRollingAppender"/>-->
+<!--        <appender-ref ref="consoleAppender"/>-->
+<!--        <appender-ref ref="fileAppender"/>-->
+<!--        <appender-ref ref="rollingFileAppender"/>-->
+<!--        <appender-ref ref="dailyRollingFileAppender"/>-->
         <appender-ref ref="tx_log_all"/>
         <appender-ref ref="tx_log"/>
         <appender-ref ref="tx_log_day"/>
