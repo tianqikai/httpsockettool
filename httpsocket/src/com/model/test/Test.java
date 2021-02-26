@@ -8,10 +8,6 @@ import static java.lang.System.*;
 
 public class Test{
    public static void main(String args[])throws IOException{
-
-
-
-
 //      byte[] bytes1="我".getBytes();
 //      out.println(bytes1.length);
 //      DataInputStream in = new DataInputStream(new FileInputStream("E:\\httpsocket\\src\\com\\model\\test\\test.txt"));

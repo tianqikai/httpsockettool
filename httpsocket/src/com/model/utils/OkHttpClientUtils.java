@@ -59,7 +59,6 @@ public class OkHttpClientUtils {
      */
     public String okFormPost(String url, HashMap<String,String> resquestMap) throws IOException {
         OkHttpClient client = new OkHttpClient();
-
         // 提交FormData
         FormBody.Builder form = new FormBody.Builder();
         for(String key:resquestMap.keySet()){
@@ -69,7 +68,6 @@ public class OkHttpClientUtils {
                 .url(url)
                 .post(form.build())
                 .build();
-
         Response response = client.newCall(request).execute();
         if(response.isSuccessful()){
             log.info("okhttp返回信息："+response.toString());
